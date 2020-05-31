@@ -26,90 +26,207 @@
 ["java:package:cl.ucn.disc.pdis.fivet.zeroice", "cs:namespace:Fivet.ZeroIce"]
 module model {
 
-    /*
-    *   The Persona
-    */
-    class Persona{
+    /**
+     * The Persona.
+     */
+    ["cs:property"]
+    class Persona {
 
-        string nombre;
-        string direccion;
-        long telefonoFijo;
-        long telefonoMovil;
-        string email;
+        /**
+         * Primary Key.
+         */
+        int uid;
+
+        /**
+         * Rut: 815184009.
+         */
         string rut;
+
+        /**
+         * Nombre.
+         */
+        string nombre;
+
+        /**
+         * Apellido.
+         */
+        string apellido;
+
+        /**
+         * Direccion.
+         */
+        string direccion;
+
+        /**
+         * Telefono fijo: +56 55 2355000
+         */
+        long telefonoFijo;
+
+        /**
+         * Telefono movil: +569 8123 1234
+         */
+        long telefonoMovil;
+
+        /**
+         * Correo electronico.
+         */
+        string email;
+
     }
 
+    /**
+     * The Sexo.
+     */
     enum Sexo { MACHO, HEMBRA }
-    enum tipoPaciente { INTERNO, EXTERNO }
 
-    /*
-    *   The Ficha
-    */
-    class Ficha{
+    /**
+     * The Tipo of Paciente.
+     */
+    enum TipoPaciente { INTERNO, EXTERNO }
 
-        long id;
+    /**
+     * The Ficha.
+     */
+    ["cs:property"]
+    class Ficha {
+
+        /**
+         * Primary Key.
+         */
+        int uid;
+
+        /**
+         * Numero: 1554.
+         */
+        int numero;
+
+        /**
+         * Nombre: Firulay.
+         */
         string nombre;
+
+        /**
+         * Especie: Canino.
+         */
         string especie;
-        string raza;
-        string color;
-        Sexo sexo;
-        tipoPaciente tipo;
 
-        //ISO_ZONED_DATE_TIME
+        /**
+         * Fecha de Nacimiento.
+         * Format: ISO_ZONED_DATE_TIME
+         */
         string fechaNacimiento;
+
+        /**
+         * Raza: Rottweiler.
+         */
+        string raza;
+
+        /**
+         * Color: rojo cobrizo.
+         */
+        string color;
+
+        /**
+         * Sexo: macho / hembra.
+         */
+        Sexo sexo;
+
+        /**
+         * TipoPaciente: interno/externo.
+         */
+        TipoPaciente tipoPaciente;
     }
 
-    /*
-    *   The Control
-    */
-    class Control{
+    /**
+     * The Control.
+     */
+    ["cs:property"] 
+    class Control {
 
-        // ISO_ZONED_DATE_TIME
+        /**
+         * PK.
+         */
+        int uid;
+
+        /**
+         * Fecha.
+         * Format: ISO_ZONED_DATE_TIME
+         */
         string fecha;
 
-        // ISO_ZONED_DATE_TIME
-        string proximoControl;
+        /**
+         * Fecha proximo control.
+         * Format: ISO_ZONED_DATE_TIME
+         */
+        string fechaProximoControl;
 
-        long temperatura;
-        long peso;
-        long altura;
+        /**
+         * Temperatura.
+         */
+        float temperatura;
+
+        /**
+         * Peso.
+         */
+        float peso;
+
+        /**
+         * Altura.
+         */
+        float altura;
+
+        /**
+         * Diagnostico.
+         */
         string diagnostico;
-        string veterinario;
+
     }
 
-    /*
-    *   The Examen
-    */
-    class Examen{
-        string nombre;
+    /**
+     * The Contratos.
+     */
+    interface Contratos {
 
-        // ISO_ZONED_DATE_TIME
-        string fecha;
-    }
+        /**
+         * Deseo registrar los datos de un paciente.
+         *
+         * @param ficha a crear en el backend.
+         * @return the ficha almacenada en el backend (con numero asignado).
+         */
+        Ficha crearFicha(Ficha ficha);
 
-    /*
-    *   The Foto
-    */
-    class Foto{
-        string url;
-    }
+        /**
+         * Deseo registrar los datos del duenio de un paciente.
+         *
+         * @param persona a crear en el backend.
+         * @return the Persona almacenada en el backend.
+         */
+        Persona crearPersona(Persona persona);
 
-    /*
-    * The Contratos
-    */
-    interface Contratos{
+        /**
+         * Deseo registrar los datos de un Control.
+         *
+         * @param numeroFicha al cual sera asignado el control.
+         * @param control a agregar.
+         */
+        Control crearControl(int numeroFicha, Control control);
 
-    Ficha obtenerFicha(int numero);
+        /**
+         * Dado un numero de ficha, retorna la ficha asociada.
+         *
+         * @param numero de la ficha a obtener.
+         * @return the Ficha.
+         */
+        Ficha obtenerFicha(int numero);
 
-    void registrarPaciente(Ficha ficha);
+        /**
+         * Dado un numero de rut obtiene la persona.
+         *
+         * @param rut de la persona a buscar.
+         * @return the Persona.
+         */
+        Persona obtenerPersona(string rut);
 
-    void registrarDueno(Persona dueno);
-
-    void registrarControl(Control control);
-
-    void agregarFoto(Foto foto);
-
-    //void agregarExamenes(List<Examen> examenes);
     }
 
     /**
